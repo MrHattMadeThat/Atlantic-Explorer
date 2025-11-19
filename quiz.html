@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - Atlantic Canada Explorer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a2332 0%, #2d3e50 100%);
+            color: #e8eaf0;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            text-align: center;
+            border-bottom: 3px solid #d4772c;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            color: #f0dcc8;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            color: #d4772c;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .header .breadcrumb {
+            font-size: 0.95rem;
+            color: #b8c5d6;
+        }
+
+        .header .breadcrumb a {
+            color: #d4772c;
+            text-decoration: none;
+        }
+
+        .header .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .intro {
+            background: rgba(212, 119, 44, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 4px solid #d4772c;
+        }
+
+        .quiz-container {
+            display: none;
+        }
+
+        .quiz-container.active {
+            display: block;
+        }
+
+        .question-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 25px;
+            border: 1px solid rgba(212, 119, 44, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .question-header {
+            margin-bottom: 20px;
+        }
+
+        .question-number {
+            font-size: 0.9rem;
+            color: #d4772c;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            color: #f0dcc8;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .choice {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(212, 119, 44, 0.2);
+            border-radius: 6px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            padding-left: 45px;
+        }
+
+        .choice:hover:not(.disabled) { /* Disable hover effect when checked */
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(212, 119, 44, 0.4);
+        }
+
+        .choice input[type="radio"] {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+         .choice input[type="radio"]:disabled {
+             cursor: not-allowed;
+         }
+
+        .choice label {
+            cursor: pointer;
+            display: block;
+        }
+        .choice.disabled label {
+             cursor: not-allowed;
+         }
+
+        .choice.selected {
+            background: rgba(212, 119, 44, 0.2);
+            border-color: rgba(212, 119, 44, 0.6);
+        }
+
+        .choice.correct {
+            background: rgba(76, 175, 80, 0.2);
+            border-color: rgba(76, 175, 80, 0.6);
+        }
+
+        .choice.incorrect {
+            background: rgba(220, 53, 69, 0.2);
+            border-color: rgba(220, 53, 69, 0.6);
+        }
+
+        .choice.disabled { /* Style for choices after checking */
+             cursor: not-allowed;
+             opacity: 0.7;
+        }
+
+        .feedback {
+            display: none;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+            line-height: 1.6;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: rgba(76, 175, 80, 0.1);
+            border-left: 4px solid rgba(76, 175, 80, 0.6);
+            color: #a8d5ba;
+        }
+
+        .feedback.incorrect {
+            background: rgba(220, 53, 69, 0.1);
+            border-left: 4px solid rgba(220, 53, 69, 0.6);
+            color: #ffb3ba;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            background: #d4772c;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover:not(:disabled) {
+            background: #e68a3d;
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+            opacity: 0.7;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(212, 119, 44, 0.3);
+            color: #d4772c;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .btn.hidden { /* Added class to hide buttons */
+            display: none;
+        }
+
+        .results-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(212, 119, 44, 0.2);
+            display: none;
+        }
+
+        .results-card.show {
+            display: block;
+        }
+
+        .results-card h2 {
+            font-size: 2rem;
+            color: #f0dcc8;
+            margin-bottom: 15px;
+        }
+
+        .score-display {
+            font-size: 3rem;
+            color: #d4772c;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .progress-dot {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(212, 119, 44, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .progress-dot.completed {
+            background: rgba(76, 175, 80, 0.3);
+            border-color: rgba(76, 175, 80, 0.6);
+            color: #a8d5ba;
+        }
+
+        .progress-dot.current {
+            background: rgba(212, 119, 44, 0.3);
+            border-color: rgba(212, 119, 44, 0.6);
+            color: #d4772c;
+        }
+
+        .footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px 30px;
+            text-align: center;
+            border-top: 2px solid rgba(212, 119, 44, 0.3);
+            color: #b8c5d6;
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: #d4772c;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .question-text {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>✏️ Atlantic Canada Quiz</h1>
+            <p class="subtitle">Test Your Understanding</p>
+            <p class="breadcrumb">
+                <a href="index.html">← Back to Main Menu</a>
+            </p>
+        </header>
+
+        <main class="content">
+            <div class="intro">
+                <p><strong>Test your knowledge!</strong> This quiz covers the main concepts from the Atlantic Canada Explorer. It's based on the Grade 6 Social Studies curriculum.</p>
+            </div>
+
+            <div class="progress-bar" id="progressBar">
+                </div>
+
+            <div class="quiz-container active" id="quizContainer">
+                </div>
+
+            <div class="results-card" id="resultsCard">
+                <h2>Quiz Complete! 🎉</h2>
+                <div class="score-display" id="scoreDisplay">0/0</div>
+                <p id="scoreMessage" style="color: #e8eaf0; margin-top: 15px;"></p>
+                <div class="button-group" style="margin-top: 30px;">
+                    <button class="btn" onclick="retakeQuiz()">Retake Quiz</button>
+                    <button class="btn btn-secondary" onclick="window.location.href='index.html'">Back to Main Menu</button>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>Use this quiz to reinforce what you've learned about Atlantic Canada. <a href="index.html">Return to any page</a> for more information.</p>
+        </footer>
+    </div>
+
+    <script>
+        const QUIZ_QUESTIONS = [
+            {
+                q: "How many provinces make up Atlantic Canada?",
+                choices: [
+                    "Three",
+                    "Four",
+                    "Five",
+                    "Six"
+                ],
+                answerIndex: 1,
+                explain: "Atlantic Canada is made up of four provinces: New Brunswick, Nova Scotia, Prince Edward Island, and Newfoundland & Labrador."
+            },
+            {
+                q: "Which province is Canada's only officially bilingual province?",
+                choices: [
+                    "Nova Scotia",
+                    "Quebec",
+                    "New Brunswick",
+                    "Prince Edward Island"
+                ],
+                answerIndex: 2,
+                explain: "New Brunswick is Canada's only officially bilingual (English and French) province."
+            },
+            {
+                q: "What major historical event involved the forced removal of French settlers from the region in 1755?",
+                choices: [
+                    "Confederation",
+                    "The Acadian Expulsion (Le Grand Dérangement)",
+                    "The Cod Moratorium",
+                    "The Battle of the Plains of Abraham"
+                ],
+                answerIndex: 1,
+                explain: "The British forcibly removed thousands of Acadians from their homes in 1755, an event known as the Acadian Expulsion or Le Grand Dérangement."
+            },
+            {
+                q: "Which of these is a major traditional and modern industry in Atlantic Canada?",
+                choices: [
+                    "Car manufacturing",
+                    "Fisheries (especially lobster and salmon)",
+                    "Tech industry",
+                    "Movie production"
+                ],
+                answerIndex: 1,
+                explain: "The fisheries (catching and processing fish, lobster, crab, etc.) have been a central part of Atlantic Canada's economy and culture for centuries."
+            },
+            {
+                q: "Which province joined Canada last, in 1949?",
+                choices: [
+                    "Prince Edward Island",
+                    "New Brunswick",
+                    "Nova Scotia",
+                    "Newfoundland (now Newfoundland & Labrador)"
+                ],
+                answerIndex: 3,
+                explain: "Newfoundland was a separate British Dominion and voted to join Canada in 1949, becoming its 10th province."
+            },
+            {
+                q: "What is the name of the famous bay shared by New Brunswick and Nova Scotia, known for the highest tides in the world?",
+                choices: [
+                    "Bay of Fundy",
+                    "Hudson Bay",
+                    "Passamaquoddy Bay",
+                    "St. Lawrence Seaway"
+                ],
+                answerIndex: 0,
+                explain: "The Bay of Fundy is world-famous for having the highest tidal range in the world."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answeredCurrentQuestion = false; // Track if the current question has been checked
+
+        function initializeQuiz() {
+            renderProgressBar();
+            renderQuestion();
+        }
+
+        function renderProgressBar() {
+            const progressBar = document.getElementById('progressBar');
+            progressBar.innerHTML = QUIZ_QUESTIONS.map((_, index) => `
+                <div class="progress-dot ${index === currentQuestion ? 'current' : (index < currentQuestion ? 'completed' : '')}" id="dot-${index}">
+                    ${index + 1}
+                </div>
+            `).join('');
+            progressBar.style.display = 'flex'; // Ensure it's visible at start/retake
+        }
+
+        function renderQuestion() {
+            answeredCurrentQuestion = false; // Reset answer status for the new question
+            const question = QUIZ_QUESTIONS[currentQuestion];
+            const container = document.getElementById('quizContainer');
+
+            container.innerHTML = `
+                <div class="question-card">
+                    <div class="question-header">
+                        <div class="question-number">Question ${currentQuestion + 1} of ${QUIZ_QUESTIONS.length}</div>
+                        <div class="question-text">${question.q}</div>
+                    </div>
+                    <div class="choices" id="choicesContainer">
+                        ${question.choices.map((choice, index) => `
+                            <label class="choice" id="choice-${index}">
+                                <input type="radio" name="answer" value="${index}">
+                                <span>${choice}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                    <div class="feedback" id="feedback"></div>
+                    <div class="button-group">
+                        <button class="btn btn-secondary ${currentQuestion === 0 ? 'disabled' : ''}"
+                                id="prevBtn"
+                                onclick="previousQuestion()"
+                                ${currentQuestion === 0 ? 'disabled' : ''}>
+                            ← Previous
+                        </button>
+                        <button class="btn" id="checkBtn" onclick="checkAnswer()">
+                            Check Answer
+                        </button>
+                        <button class="btn hidden" id="nextBtn" onclick="nextQuestion()">
+                            ${currentQuestion === QUIZ_QUESTIONS.length - 1 ? 'Submit Quiz' : 'Next Question →'}
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // Add change listeners to enable Check button
+            document.querySelectorAll('input[name="answer"]').forEach(input => {
+                input.addEventListener('change', (e) => {
+                    updateChoiceSelection(e.target.value);
+                    document.getElementById('checkBtn').disabled = false; // Enable check button on selection
+                });
+            });
+
+            // Disable Check button initially
+            document.getElementById('checkBtn').disabled = true;
+        }
+
+        function updateChoiceSelection(selectedIndex) {
+            document.querySelectorAll('.choice').forEach((choice, index) => {
+                choice.classList.remove('selected');
+                if (index.toString() === selectedIndex) {
+                    choice.classList.add('selected');
+                }
+            });
+        }
+
+        function checkAnswer() {
+            const selected = document.querySelector('input[name="answer"]:checked');
+            if (!selected) {
+                // This shouldn't happen if button is disabled, but as a safeguard
+                alert('Please select an answer.');
+                return;
+            }
+
+            answeredCurrentQuestion = true;
+            const answerIndex = parseInt(selected.value);
+            const question = QUIZ_QUESTIONS[currentQuestion];
+            const isCorrect = answerIndex === question.answerIndex;
+
+            // Update score only if it's the first time checking this question
+            // (Prevents increasing score by going back and forth)
+            // We use a simple check here - only update score if it's correct now.
+            // A more robust system would track 'checked status' per question.
+             if (isCorrect) {
+                 // Check if this question was already answered correctly to avoid double points
+                 const dot = document.getElementById(`dot-${currentQuestion}`);
+                 if (!dot.classList.contains('correctly-answered')) {
+                     score++;
+                     dot.classList.add('correctly-answered'); // Mark as correctly answered
+                 }
+            }
+
+
+            // Show feedback
+            const feedback = document.getElementById('feedback');
+            feedback.innerHTML = `<strong>Explanation:</strong> ${question.explain}`; // Bold the label
+            feedback.classList.add('show');
+            feedback.classList.remove('correct', 'incorrect');
+            feedback.classList.add(isCorrect ? 'correct' : 'incorrect');
+
+            // Update choice styling and disable inputs
+            document.querySelectorAll('.choice').forEach((choice, index) => {
+                choice.classList.add('disabled'); // Add disabled class
+                choice.querySelector('input').disabled = true; // Disable radio button
+                if (index === question.answerIndex) {
+                    choice.classList.add('correct');
+                } else if (index === answerIndex && !isCorrect) {
+                    choice.classList.add('incorrect');
+                }
+            });
+
+            // Update buttons
+            document.getElementById('checkBtn').classList.add('hidden');
+            document.getElementById('nextBtn').classList.remove('hidden');
+            document.getElementById('prevBtn').disabled = true; // Disable previous after checking
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < QUIZ_QUESTIONS.length - 1) {
+                currentQuestion++;
+                updateProgressBar();
+                renderQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function previousQuestion() {
+            // Only allow previous if the current question hasn't been checked yet
+             if (currentQuestion > 0 && !answeredCurrentQuestion) {
+                 // Remove 'correctly-answered' flag if user goes back before checking
+                 const dot = document.getElementById(`dot-${currentQuestion}`);
+                 dot.classList.remove('correctly-answered');
+
+                 currentQuestion--;
+                 updateProgressBar();
+                 renderQuestion();
+             }
+        }
+
+        function updateProgressBar() {
+            document.querySelectorAll('.progress-dot').forEach((dot, index) => {
+                dot.classList.remove('completed', 'current');
+                if (index < currentQuestion) {
+                    dot.classList.add('completed');
+                } else if (index === currentQuestion) {
+                    dot.classList.add('current');
+                }
+            });
+        }
+
+        function showResults() {
+            const resultsCard = document.getElementById('resultsCard');
+            const quizContainer = document.getElementById('quizContainer');
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const scoreMessage = document.getElementById('scoreMessage');
+
+            quizContainer.classList.remove('active');
+            resultsCard.classList.add('show');
+            document.getElementById('progressBar').style.display = 'none'; // Hide progress bar
+
+            scoreDisplay.textContent = `${score}/${QUIZ_QUESTIONS.length}`;
+
+            const percentage = (score / QUIZ_QUESTIONS.length) * 100;
+            let message = "";
+            if (percentage === 100) {
+                message = "Perfect score! You've demonstrated excellent knowledge of Atlantic Canada!";
+            } else if (percentage >= 80) {
+                message = "Great job! You've shown strong understanding of the key concepts.";
+            } else if (percentage >= 60) {
+                message = "Good work! You understand many important concepts. Review the pages to strengthen your knowledge.";
+            } else {
+                message = "Keep learning! Review the explorer pages to deepen your understanding of Atlantic Canada.";
+            }
+             scoreMessage.textContent = message;
+
+            // Remove temporary class used for score tracking
+             document.querySelectorAll('.progress-dot').forEach(dot => dot.classList.remove('correctly-answered'));
+        }
+
+        function retakeQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            answeredCurrentQuestion = false;
+            document.getElementById('resultsCard').classList.remove('show');
+            document.getElementById('quizContainer').classList.add('active');
+            initializeQuiz(); // Re-initialize everything
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeQuiz);
+    </script>
+</body>
+</html>

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weather & Seasons in Atlantic Canada - Atlantic Canada Explorer</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+      background:linear-gradient(135deg,#1a2332 0%,#2d3e50 100%);
+      color:#e8eaf0; line-height:1.6; min-height:100vh; padding:20px;
+    }
+    .container{max-width:1200px;margin:0 auto;background:rgba(255,255,255,.05);border-radius:12px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.3)}
+    .header{background:rgba(0,0,0,.3);padding:40px 30px;text-align:center;border-bottom:3px solid #d4772c}
+    .header h1{font-size:2.4rem;margin-bottom:8px;color:#f0dcc8}
+    .header .subtitle{font-size:1.1rem;color:#d4772c;font-style:italic;margin-bottom:10px}
+    .header p{color:#b8c5d6;max-width:860px;margin:0 auto}
+    .content{padding:40px 30px}
+    .back-link{display:inline-block;margin-bottom:30px;padding:10px 20px;background:rgba(212,119,44,.2);border:2px solid rgba(212,119,44,.4);border-radius:6px;color:#d4772c;text-decoration:none;transition:.3s}
+    .back-link:hover{background:rgba(212,119,44,.3);border-color:#d4772c}
+    .intro-section{background:rgba(255,255,255,.08);border-radius:8px;padding:30px;margin-bottom:25px;border-left:4px solid #d4772c}
+    .intro-section h2{font-size:1.8rem;color:#f0dcc8;margin-bottom:15px;display:flex;gap:12px;align-items:center}
+    .intro-section p{color:#b8c5d6;margin-bottom:12px}
+
+    .section-label{margin:18px 0 8px 0; color:#d4772c; font-weight:700; font-size:.95rem; letter-spacing:.04em; text-transform:uppercase}
+    .collapsible-section{background:rgba(255,255,255,.08);border-radius:8px;margin-bottom:15px;border:2px solid rgba(212,119,44,.2);overflow:hidden;transition:.3s}
+    .collapsible-section:hover{border-color:rgba(212,119,44,.4)}
+    .section-header{padding:20px 30px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,.2);transition:.3s}
+    .section-header:hover{background:rgba(0,0,0,.3)}
+    .section-header h2{font-size:1.6rem;color:#f0dcc8;margin:0;display:flex;gap:12px;align-items:center}
+    .toggle-icon{font-size:1.5rem;color:#d4772c;transition:transform .3s}
+    .toggle-icon.active{transform:rotate(180deg)}
+    .section-content{max-height:0;overflow:hidden;transition:max-height .4s ease}
+    .section-content.active{max-height:4000px}
+    .section-inner{padding:30px}
+    .section-inner h3{font-size:1.25rem;color:#d4772c;margin:20px 0 10px}
+    .section-inner p{color:#b8c5d6;margin-bottom:12px}
+    .two-col{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+    .card{background:rgba(0,0,0,.25);border:2px solid rgba(212,119,44,.2);border-radius:8px;padding:18px}
+    .card h4{color:#f0dcc8;margin-bottom:8px}
+    .card p{font-size:.97rem}
+
+    .season-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin-top:20px}
+    .season-card{background:rgba(0,0,0,.3);padding:20px;border-radius:8px;border:2px solid rgba(212,119,44,.2)}
+    .season-card h4{font-size:1.25rem;color:#f0dcc8;margin-bottom:10px}
+    .emoji{font-size:2.2rem;display:block;margin-bottom:8px}
+
+    .highlight-box{background:rgba(212,119,44,.15);padding:20px;border-radius:8px;border-left:4px solid #d4772c;margin:20px 0}
+    .highlight-box h3{color:#d4772c;margin:0 0 10px 0}
+    .fact-list{list-style:none;padding-left:0}
+    .fact-list li{padding:10px 0;border-bottom:1px solid rgba(212,119,44,.2);color:#b8c5d6}
+    .fact-list li:last-child{border-bottom:none}
+    .fact-list li strong{color:#d4772c}
+
+    .mini-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:15px;margin-top:10px}
+    .mini{background:rgba(0,0,0,.25);border-left:3px solid rgba(212,119,44,.6);padding:14px;border-radius:6px}
+    .mini h4{color:#f0dcc8;margin-bottom:6px;font-size:1.05rem}
+
+    .storm-path{background:rgba(0,0,0,.3);padding:20px;border-radius:8px;margin:15px 0;border-left:4px solid rgba(212,119,44,.6)}
+    .storm-path h4{color:#d4772c;margin-bottom:10px;font-size:1.15rem}
+
+    .footer{background:rgba(0,0,0,.3);padding:20px 30px;text-align:center;border-top:2px solid rgba(212,119,44,.3);color:#b8c5d6;font-size:.9rem}
+
+    @media print{
+      body{background:#fff;color:#000}
+      .container{box-shadow:none}
+      .section-content{max-height:none!important}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>🌦️ Weather & Seasons in Atlantic Canada</h1>
+      <p class="subtitle">How the ocean shapes our year</p>
+      <p>Weather is what we feel day to day — sunshine, rain, snow, or fog. Over time, these changes repeat to create our seasons. Because we live beside the Atlantic Ocean, our seasons are milder, wetter, and full of surprises. Together, these patterns shape how Atlantic Canadians live, work, and celebrate.</p>
+    </header>
+
+    <main class="content">
+      <a href="index.html" class="back-link">← Back to Main Menu</a>
+
+      <!-- INTRODUCTION: THE SCIENCE -->
+      <div class="section-label">Introduction</div>
+      <div class="collapsible-section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <h2>🌊 The Science of Our Weather</h2>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="section-content">
+          <div class="section-inner">
+            <h3>What makes our weather special?</h3>
+            <p>Atlantic Canada has a <strong>maritime climate</strong>, which means the ocean strongly affects our weather. The ocean acts like a <strong>temperature buffer</strong>, keeping winters a bit warmer and summers a bit cooler than places far inland. The <strong>Gulf Stream</strong> carries warm water up our coast, and when warm, moist air meets colder air, weather can change quickly. That's why fog is common on parts of our coast — especially around the Bay of Fundy.</p>
+
+            <div style="background: rgba(0,0,0,.3); padding: 20px; border-radius: 8px; margin: 20px 0;">
+              <h4 style="color: #d4772c; margin-bottom: 15px; font-size: 1.15rem;">🌊 The Atlantic Meridional Overturning Circulation (AMOC)</h4>
+              <img src="../Atlantic Images/map-global-meridional-overturning-circulation.webp" alt="Map showing the Atlantic Meridional Overturning Circulation" style="width: 100%; max-width: 700px; border-radius: 8px; margin: 15px 0; display: block;">
+              <p style="font-size: 0.95rem; color: #b8c5d6; margin-top: 12px;">The Gulf Stream is part of a much larger system called the <strong>Atlantic Meridional Overturning Circulation (AMOC)</strong>. This massive "conveyor belt" of ocean currents moves warm water from the tropics northward along our coast, then sends cold water back south along the ocean floor. The AMOC is one of the most important systems affecting our climate — it's why Atlantic Canada's winters are milder than other places at the same latitude, and why our weather is so influenced by the ocean.</p>
+              <p style="font-size: 0.95rem; color: #b8c5d6; margin-top: 8px;"><strong>Fun fact:</strong> Without the AMOC and Gulf Stream, Atlantic Canada would be as cold as Labrador in winter!</p>
+            </div>
+
+            <h3>Case study: Fundy Coast vs. Inland New Brunswick</h3>
+            <div class="two-col">
+              <div class="card">
+                <h4>🌫️ Fundy Coast</h4>
+                <p>• Cooler summers, milder winters</p>
+                <p>• Frequent fog and more "mixed" winter days (near 0 °C)</p>
+                <p>• Ferry timing, harbour work, and outdoor plans can be affected by fog and tides</p>
+              </div>
+              <div class="card">
+                <h4>🌨️ Inland NB</h4>
+                <p>• Warmer summer highs, colder winter lows</p>
+                <p>• Less fog overall; more days that stay below freezing → more snow</p>
+                <p>• Road clearing and travel plans focus more on snow and ice</p>
+              </div>
+            </div>
+
+            <!-- BUFFER EXPLANATION DROPDOWN -->
+            <div class="collapsible-section" style="margin-top: 15px;">
+              <div class="section-header" onclick="toggleSection(this)">
+                <h2>🛡️ What Is a "Buffer"?</h2>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="section-content">
+                <div class="section-inner">
+                  <p><strong>A buffer is something in the middle that softens, protects, or reduces the impact between two things.</strong></p>
+
+                  <p>In weather and climate, a buffer helps make temperature changes less extreme.</p>
+
+                  <h3>🌊 The Atlantic Ocean as a Buffer</h3>
+                  <p>The ocean warms up slowly and cools down slowly. This keeps coastal areas:</p>
+                  <ul class="fact-list">
+                    <li><strong>warmer in winter</strong> (the ocean releases heat)</li>
+                    <li><strong>cooler in summer</strong> (the ocean absorbs heat)</li>
+                  </ul>
+
+                  <p style="margin-top: 8px;">Because the ocean is a buffer, Atlantic Canadians have more days close to 0 °C in winter, more foggy mornings, and more "mixed" precipitation days than many inland areas.</p>
+
+                  <h3>🚗 Everyday Example: Shocks on a Car</h3>
+                  <p>Cars and buses have <strong>shocks</strong> (shock absorbers) between the wheels and the body of the vehicle.</p>
+                  <ul class="fact-list">
+                    <li>The wheels hit the bumps and potholes.</li>
+                    <li>The shocks absorb some of that up-and-down motion.</li>
+                    <li>The people inside don't feel the bumps as strongly.</li>
+                  </ul>
+                  <p><strong>Shocks are a buffer</strong> between the rough road and the people in the vehicle.</p>
+
+                  <h3>🏰 In Social Studies: Buffer States</h3>
+                  <p>In history and geography, a <strong>buffer state</strong> is a smaller country or region that sits between two larger, more powerful countries that might not get along.</p>
+                  <ul class="fact-list">
+                    <li>The buffer state is "in the middle."</li>
+                    <li>It can reduce direct conflict between the bigger countries.</li>
+                    <li>Sometimes both sides want it as a friend, so they are more careful.</li>
+                  </ul>
+                  <p>Just like the ocean and car shocks, a buffer state doesn't stop all problems, but it can <strong>reduce how strong</strong> the impact is between two sides.</p>
+
+                  <p style="margin-top: 12px; font-style: italic; color: #b8c5d6;">
+                    A buffer doesn't stop weather or conflict — it changes how strong it feels and how much it affects people.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- END BUFFER EXPLANATION DROPDOWN -->
+
+            <div class="highlight-box" style="margin-top:16px">
+              <h3>Think about it</h3>
+              <p>How does location (coast vs. inland) change the kind of weather people experience — and the decisions they make each day?</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WINTER SEASON -->
+      <div class="section-label">Winter Season</div>
+      <div class="collapsible-section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <h2>❄️ Winter (December–February)</h2>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="section-content">
+          <div class="section-inner">
+            <p><strong>Typical temps:</strong> −10 °C to 0 °C</p>
+            <p>Winter brings snow, wind, and sometimes freezing rain. Coastal areas stay milder than inland regions, where temperatures can drop well below freezing for extended periods.</p>
+
+            <div class="storm-path">
+              <h4>❄️ Nor'easters</h4>
+              <p>Powerful winter storms that move up the Atlantic coast, bringing heavy snow, strong winds, and sometimes coastal flooding. These systems can cause significant disruption to transportation and daily life.</p>
+              <p><strong>Impact:</strong> School closures, travel delays, power outages, and coastal erosion.</p>
+            </div>
+
+            <div class="storm-path">
+              <h4>🌬️ Alberta Clippers</h4>
+              <p>Fast-moving weather systems that originate in Alberta and sweep across the prairies before reaching Atlantic Canada. While they don't typically bring heavy snow, they bring bitter cold air and strong winds.</p>
+              <p><strong>Impact:</strong> Sharp temperature drops, wind chill warnings, and light to moderate snow.</p>
+            </div>
+
+            <div class="storm-path">
+              <h4>🧊 Ice Storms</h4>
+              <p>Rain that freezes on contact with cold surfaces, coating roads, trees, and power lines with ice. These storms can be particularly dangerous and destructive.</p>
+              <p><strong>Impact:</strong> Treacherous driving conditions, widespread power outages, damage to trees and infrastructure.</p>
+            </div>
+
+            <div class="highlight-box">
+              <h3>Winter Activities & Adaptations</h3>
+              <ul class="fact-list">
+                <li><strong>Snow Removal:</strong> Communities invest heavily in plowing, sanding, and salting roads.</li>
+                <li><strong>Winter Sports:</strong> Skiing, snowmobiling, ice fishing, and winter carnivals embrace the season.</li>
+                <li><strong>Home Preparation:</strong> Steeper roofs shed snow; proper insulation and heating systems are essential.</li>
+                <li><strong>Travel Planning:</strong> Winter tires, emergency kits, and checking forecasts before trips.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SPRING SEASON -->
+      <div class="section-label">Spring Season</div>
+      <div class="collapsible-section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <h2>🌸 Spring (March–May)</h2>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="section-content">
+          <div class="section-inner">
+            <p><strong>Typical temps:</strong> 0 °C to 15 °C</p>
+            <p>Spring is the most unpredictable season in Atlantic Canada. Snowmelt, rain, and warming temperatures create rapidly changing conditions. Days grow longer and trees begin to bud.</p>
+
+            <div class="storm-path">
+              <h4>🌊 Spring Floods</h4>
+              <p>Every spring, as snow melts and ice breaks up on rivers, <strong>flooding</strong> becomes a serious concern across New Brunswick. Heavy rain combined with rapid snowmelt can cause rivers to overflow their banks, threatening homes, roads, and communities.</p>
+              
+              <h3>Why Spring Floods Happen</h3>
+              <p><strong>Snowmelt:</strong> Winter snow accumulated in watersheds melts quickly when temperatures rise, sending large volumes of water into rivers.</p>
+              <p><strong>Ice Jams:</strong> As river ice breaks up, chunks can pile up and create dams, causing water to back up and flood upstream areas.</p>
+              <p><strong>Rain on Snow:</strong> Warm spring rain falling on existing snow accelerates melting and can overwhelm river systems.</p>
+              <p><strong>Frozen Ground:</strong> When the ground is still frozen, water can't soak in — it all runs off into streams and rivers.</p>
+            </div>
+
+            <h3>Major Rivers at Risk</h3>
+            <div class="mini-grid">
+              <div class="mini">
+                <h4>Saint John River</h4>
+                <p>New Brunswick's longest river frequently floods in spring, affecting Fredericton, Grand Lake, and communities along its path.</p>
+              </div>
+              <div class="mini">
+                <h4>St. Croix River</h4>
+                <p>The border river between New Brunswick and Maine can cause flooding in communities like St. Stephen.</p>
+              </div>
+              <div class="mini">
+                <h4>Magaguadavic & Bonny River</h4>
+                <p>These smaller rivers near the Bay of Fundy can flood quickly, as seen in St. George.</p>
+              </div>
+            </div>
+
+            <div class="storm-path">
+              <h4>🏘️ Case Study: St. George Flood (2005)</h4>
+              <p>In 2005, St. George experienced a major flood when the <strong>Bonny River</strong> overflowed its banks. The combination of rapid snowmelt, rain, and ice jams caused water levels to rise dramatically.</p>
+              <p><strong>Impact:</strong> Parts of the town were submerged, with water flooding homes, businesses, and streets. The community rallied together to sandbag properties and evacuate affected areas. This event remains a powerful reminder of the risks that spring flooding poses to riverside communities.</p>
+              
+              <div style="margin-top: 15px; background: rgba(0,0,0,.3); padding: 15px; border-radius: 8px;">
+                <h4 style="margin-bottom: 10px;">📹 Video: St. George Flooding - Bonny River</h4>
+                <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px;">
+                  <iframe 
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" 
+                    src="https://www.youtube-nocookie.com/embed/AQU7doXyf5s?si=t12" 
+                    title="St. George Flooding: Bonny River" 
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen>
+                  </iframe>
+                </div>
+                <p style="font-size: 0.9rem; margin-top: 10px; font-style: italic;">Watch footage of the 2005 St. George flood and its impact on the community.</p>
+              </div>
+            </div>
+
+            <div class="highlight-box" style="margin-top: 20px;">
+              <h3>Flood Preparedness & Response</h3>
+              <ul class="fact-list">
+                <li><strong>Early Warning Systems:</strong> New Brunswick Emergency Measures Organization (NB EMO) monitors river levels and issues flood watches and warnings.</li>
+                <li><strong>Sandbagging:</strong> Communities organize volunteers to fill and place sandbags to protect properties.</li>
+                <li><strong>Evacuation Plans:</strong> Residents in flood-prone areas should have evacuation routes and emergency kits ready.</li>
+                <li><strong>Insurance:</strong> Standard home insurance often doesn't cover overland flooding — special flood insurance may be needed.</li>
+              </ul>
+            </div>
+
+            <div class="highlight-box">
+              <h3>Learn More</h3>
+              <p>For current flood information, historical data, and flood mapping: <a href="https://www2.gnb.ca/content/gnb/en/departments/elg/environment/content/water/content/flooding.html" target="_blank" style="color: #d4772c; text-decoration: underline;">Flooding in New Brunswick</a></p>
+            </div>
+
+            <div class="highlight-box" style="margin-top:16px">
+              <h3>Think about it</h3>
+              <p>Why do you think spring flooding is more common than flooding at other times of year? How might climate change affect future flood risks?</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUMMER SEASON -->
+      <div class="section-label">Summer Season</div>
+      <div class="collapsible-section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <h2>☀️ Summer (June–August)</h2>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="section-content">
+          <div class="section-inner">
+            <p><strong>Typical temps:</strong> 15 °C to 25 °C</p>
+            <p>Summer is warm and generally the most pleasant season, perfect for outdoor activities. Coastal areas stay cooler than inland regions, and some hot days can reach into the high 20s or low 30s °C.</p>
+
+            <div class="storm-path">
+              <h4>🌫️ Fog</h4>
+              <p>Fog is particularly common in late spring and early summer around the Bay of Fundy. When warm, moist air moves over the cooler ocean water, visibility can drop dramatically.</p>
+              <p><strong>Impact:</strong> Delays for ferries and boats, reduced visibility for drivers near the coast, affecting tourism and marine activities.</p>
+            </div>
+
+            <div class="storm-path">
+              <h4>🏜️ Droughts & Dry Conditions</h4>
+              <p>While Atlantic Canada is known for rain, prolonged dry spells can occur during summer months, especially inland. Low rainfall combined with high temperatures can stress crops and water supplies.</p>
+              <p><strong>Impact:</strong> Water restrictions, stressed agricultural crops, increased fire risk, low river levels affecting aquatic life.</p>
+            </div>
+
+            <div class="storm-path">
+              <h4>🔥 Forest Fires</h4>
+              <p>Dry summer conditions, combined with lightning strikes or human activity, can lead to forest fires. While less common than in western Canada, they remain a concern during hot, dry periods.</p>
+              <p><strong>Impact:</strong> Evacuations, air quality warnings from smoke, damage to forests and wildlife habitat, risk to homes in forested areas.</p>
+            </div>
+
+            <div class="highlight-box">
+              <h3>Summer in Atlantic Canada</h3>
+              <ul class="fact-list">
+                <li><strong>Tourism Season:</strong> Beaches, whale watching, festivals, and outdoor attractions thrive in summer weather.</li>
+                <li><strong>Fishing & Aquaculture:</strong> Calmer seas and longer days create ideal conditions for commercial fishing.</li>
+                <li><strong>Agriculture:</strong> Growing season for crops; farmers monitor rainfall and temperature closely.</li>
+                <li><strong>Sunniest Months:</strong> July and August typically offer the most sunshine and warmest temperatures.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FALL SEASON -->
+      <div class="section-label">Fall Season</div>
+      <div class="collapsible-section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <h2>🍂 Fall (September–November)</h2>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="section-content">
+          <div class="section-inner">
+            <p><strong>Typical temps:</strong> 5 °C to 15 °C</p>
+            <p>Fall brings spectacular foliage as leaves change color, but also more wind and rain. This is Atlantic Canada's storm season, as tropical systems and strong low-pressure systems pass through.</p>
+
+            <div class="storm-path">
+              <h4>🌀 Hurricanes & Tropical Storms</h4>
+              <p>Late summer and fall (August–October) is hurricane season. While these storms usually weaken by the time they reach Atlantic Canada, they can still bring heavy rain, strong winds, and power outages.</p>
+              <img src="../Atlantic Images/Dorian Storm.avif" alt="Hurricane Dorian satellite image" style="width: 100%; max-width: 600px; border-radius: 8px; margin: 15px 0; display: block;">
+              <p style="font-size: 0.9rem; font-style: italic; color: #b8c5d6; margin-top: 8px;">Hurricane Dorian was one of the most significant storms to impact Atlantic Canada in recent years, demonstrating how tropical storms can travel up the coast and affect our region.</p>
+              <p><strong>Notable storms:</strong> Hurricane Juan (2003), Hurricane Dorian (2019), Post-Tropical Storm Fiona (2022)</p>
+              <p><strong>Impact:</strong> Power outages lasting days or weeks, widespread tree damage, coastal flooding and erosion, property damage.</p>
+            </div>
+
+            <div class="storm-path">
+              <h4>🌊 Fall Gales & Nor'easters</h4>
+              <p>Powerful storms that develop or intensify along the Atlantic coast, bringing strong winds, heavy rain, and rough seas. These are similar to winter nor'easters but occur in fall conditions.</p>
+              <p><strong>Impact:</strong> High waves, coastal erosion, ferry cancellations, damage to docks and shoreline structures.</p>
+            </div>
+
+            <div class="highlight-box">
+              <h3>Fall in Atlantic Canada</h3>
+              <ul class="fact-list">
+                <li><strong>Wettest Months:</strong> Often November and December see the most precipitation.</li>
+                <li><strong>Fall Foliage:</strong> Peak color typically occurs in late September to early October, attracting tourists.</li>
+                <li><strong>Harvest Season:</strong> Apples, pumpkins, and other crops are harvested before frost.</li>
+                <li><strong>Storm Preparedness:</strong> Residents prepare emergency kits, check generators, and secure outdoor items before major storms.</li>
+              </ul>
+            </div>
+
+            <div class="highlight-box" style="margin-top:16px">
+              <h3>Think about it</h3>
+              <p>Why do you think Atlantic Canada experiences more tropical storm activity in fall rather than summer? How has storm severity changed in recent years?</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HOW WEATHER SHAPES LIFE -->
+      <div class="section-label">Our Seasonal Rhythm</div>
+      <div class="collapsible-section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <h2>🧭 How Weather Shapes Life in Atlantic Canada</h2>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="section-content">
+          <div class="section-inner">
+            <p>Atlantic Canadians adapt to changing weather and seasonal cycles in many ways. Here are four lenses to notice:</p>
+            <div class="mini-grid">
+              <div class="mini">
+                <h4>Work & Daily Routines</h4>
+                <p>Fishing, aquaculture, and tourism depend on calm "weather windows." Fog, wind, or storms can delay trips and change plans. Forestry and back-road hauling shift with freeze–thaw.</p>
+              </div>
+              <div class="mini">
+                <h4>Homes & Communities</h4>
+                <p>Steeper roofs shed snow; wind-rated shingles and sturdy siding; culverts sized for heavy rain; coastal areas plan for storm surge and high tides.</p>
+              </div>
+              <div class="mini">
+                <h4>Travel & Safety</h4>
+                <p>Fog delays ferries and small boats; radar, lights, and tide tables improve safety. Inland routes prepare for drifting snow, black ice, and road salt needs.</p>
+              </div>
+              <div class="mini">
+                <h4>Festivals & Traditions</h4>
+                <p>Summer seafood festivals and whale-watching fit calmer weather; winter carnivals embrace snow and ice; many Fundy activities follow the tide table.</p>
+              </div>
+            </div>
+
+            <div class="highlight-box">
+              <h3>Our seasonal rhythm (at a glance)</h3>
+              <p><strong>Winter:</strong> Nor'easters, Alberta Clippers, ice storms, heavy snow → <strong>Spring:</strong> Snowmelt, floods, unpredictable weather → <strong>Summer:</strong> Fog near Fundy, occasional droughts, forest fire risk, tourism season → <strong>Fall:</strong> Hurricanes, tropical storms, gales, heavy rain</p>
+            </div>
+
+            <div class="highlight-box">
+              <h3>Atlantic Weather Facts</h3>
+              <ul class="fact-list">
+                <li><strong>Annual precipitation:</strong> 1,100–1,500 mm of rain and snow combined</li>
+                <li><strong>Winter snowfall:</strong> 200–400 cm per year, depending on location</li>
+                <li><strong>Coldest month:</strong> Usually February, especially inland</li>
+                <li><strong>Warmest month:</strong> July, with coastal areas staying cooler</li>
+                <li><strong>Maritime influence:</strong> Ocean keeps temperatures moderate year-round compared to inland Canada</li>
+              </ul>
+            </div>
+
+            <div class="highlight-box" style="margin-top:16px">
+              <h3>Quick reflection</h3>
+              <p>Choose one job (fisher, farmer, tourism guide, road crew). How would each season change their daily work and planning?</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <footer class="footer">
+      <p>This page supports Grade 6 Social Studies. For current forecasts, check Environment Canada.</p>
+      <p style="margin-top:10px;font-size:.85rem">🌦️ Weather patterns create our seasons — and those seasons shape life in Atlantic Canada.</p>
+    </footer>
+  </div>
+
+  <script>
+    function toggleSection(header){
+      const content = header.nextElementSibling;
+      const icon = header.querySelector('.toggle-icon');
+      content.classList.toggle('active');
+      icon.classList.toggle('active');
+    }
+    // Open first sections by default for quick access
+    document.addEventListener('DOMContentLoaded', ()=>{
+      document.querySelectorAll('.collapsible-section').forEach((sec, i)=>{
+        if(i<1){ // open the first section
+          const header = sec.querySelector('.section-header');
+          const content = sec.querySelector('.section-content');
+          const icon = sec.querySelector('.toggle-icon');
+          content.classList.add('active');
+          icon.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

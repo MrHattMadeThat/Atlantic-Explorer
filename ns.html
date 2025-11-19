@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Scotia - Atlantic Canada Explorer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a2332 0%, #2d3e50 100%);
+            color: #e8eaf0;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1400px; margin: 0 auto; background: rgba(255, 255, 255, 0.05); border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3); }
+        .header { background: rgba(0, 0, 0, 0.3); padding: 30px; text-align: center; border-bottom: 3px solid #d4772c; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 8px; color: #f0dcc8; }
+        .header .subtitle { font-size: 1.2rem; color: #d4772c; font-style: italic; margin-bottom: 15px; }
+        .header .breadcrumb { font-size: 0.95rem; color: #b8c5d6; }
+        .header .breadcrumb a { color: #d4772c; text-decoration: none; }
+        .header .breadcrumb a:hover { text-decoration: underline; }
+        .content { padding: 30px; min-height: 500px; }
+        .section-title { font-size: 1.8rem; color: #f0dcc8; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid rgba(212, 119, 44, 0.3); }
+        .confederacy-overview { background: linear-gradient(135deg, rgba(212, 119, 44, 0.2) 0%, rgba(212, 119, 44, 0.05) 100%); padding: 30px; border-radius: 8px; margin-bottom: 30px; border: 2px solid rgba(212, 119, 44, 0.3); }
+        .confederacy-overview h3 { font-size: 1.8rem; margin-bottom: 8px; color: #f0dcc8; }
+        .confederacy-overview .translation { font-size: 1.1rem; color: #d4772c; font-style: italic; margin-bottom: 15px; display: block; }
+        .keywords { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+        .keyword-chip { background: rgba(212, 119, 44, 0.3); color: #f0dcc8; padding: 6px 14px; border-radius: 20px; font-size: 0.9rem; font-weight: 500; border: 1px solid rgba(212, 119, 44, 0.5); }
+        .nations-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .card { background: rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 20px; border: 1px solid rgba(212, 119, 44, 0.2); border-left: 4px solid #d4772c; }
+        .card h3 { font-size: 1.4rem; margin-bottom: 12px; color: #f0dcc8; }
+        .info-row { margin-bottom: 10px; line-height: 1.5; }
+        .info-label { font-weight: 600; color: #d4772c; }
+        .note { margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(212, 119, 44, 0.2); color: #c8d5e6; }
+        .footer { background: rgba(0, 0, 0, 0.3); padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; border-top: 2px solid rgba(212, 119, 44, 0.3); flex-wrap: wrap; gap: 20px; }
+        .disclaimer { font-size: 0.85rem; color: #b8c5d6; flex: 1; min-width: 200px; }
+        .btn { padding: 10px 20px; background: #d4772c; color: #fff; border: none; border-radius: 6px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; }
+        .btn:hover { background: #e68a3d; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🌊 Nova Scotia</h1>
+            <p class="subtitle">A Province of Atlantic Canada</p>
+            <p class="breadcrumb">
+                <a href="provinces.html">← Back to Provinces</a> | <a href="index.html">← Main Menu</a>
+            </p>
+        </header>
+        <main class="content">
+            <h2 class="section-title">About Nova Scotia</h2>
+            <div class="confederacy-overview">
+                <h3>Nova Scotia</h3>
+                <span class="translation" id="conf-translation">Canada's Ocean Playground</span>
+                <p id="conf-definition">A maritime province almost entirely surrounded by water, known for its rich history (including being the heart of Acadia), lighthouses, and vibrant Celtic and African Nova Scotian cultures.</p>
+                <div class="keywords" id="keywords-container">
+                    <span class="keyword-chip">Maritime History</span>
+                    <span class="keyword-chip">Acadian History</span>
+                    <span class="keyword-chip">Fisheries</span>
+                    <span class="keyword-chip">Tourism</span>
+                </div>
+            </div>
+            <div class="nations-grid" id="nations-grid">
+                <div class="card" style="border-left: 4px solid #4A7C59">
+                    <h3>Key Facts</h3>
+                    <div class="info-row"><span class="info-label">Capital City:</span> Halifax</div>
+                    <div class="info-row"><span class="info-label">Indigenous Nations:</span> Primarily the traditional territory of the Mi'kmaq Nation (Mi'kma'ki).</div>
+                    <div class="info-row"><span class="info-label">Historic Fact:</span> Home to Africville and the largest historic Black community in Canada[cite: 395].</div>
+                    <div class="note">This is a placeholder. You can add more content about NS's history, economy, and culture here!</div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p class="disclaimer">This is an educational tool. For authoritative information, please consult provincial and local historical sources.</p>
+            <button class="btn" onclick="window.print()" aria-label="Print current view">🖨️ Print</button>
+        </footer>
+    </div>
+</body>
+</html>

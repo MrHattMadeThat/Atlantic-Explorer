@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Culture - Atlantic Canada Explorer</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #1a2332 0%, #2d3e50 100%);
+      color:#e8eaf0; line-height:1.6; min-height:100vh; padding:20px;
+    }
+    .container {
+      max-width:1100px; margin:0 auto; background:rgba(255,255,255,0.05);
+      border-radius:12px; overflow:hidden; box-shadow:0 10px 40px rgba(0,0,0,.3);
+    }
+    .header {
+      background:rgba(0,0,0,0.3); padding:28px; text-align:center; border-bottom:3px solid #d4772c;
+    }
+    .header h1 { font-size:2.4rem; color:#f0dcc8; margin-bottom:6px; }
+    .subtitle { color:#d4772c; font-style:italic; }
+    .breadcrumb { margin-top:10px; color:#b8c5d6; }
+    .breadcrumb a { color:#d4772c; text-decoration:none; }
+    .breadcrumb a:hover { text-decoration:underline; }
+
+    main.content { padding:26px; }
+
+    .section-title {
+      font-size:1.7rem; color:#f0dcc8; margin-bottom:16px;
+      padding-bottom:10px; border-bottom:2px solid rgba(212,119,44,0.35);
+    }
+
+    .intro {
+      background:rgba(255,255,255,0.08); border:1px solid rgba(212,119,44,0.2);
+      border-left:4px solid #d4772c; border-radius:8px; padding:18px; margin-bottom:18px;
+    }
+
+    .toolbar {
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:10px 0 20px;
+    }
+    .search {
+      flex:1 1 260px; position:relative;
+    }
+    .search input {
+      width:100%; padding:10px 14px; border-radius:8px; border:1px solid rgba(212,119,44,0.35);
+      background:rgba(0,0,0,0.25); color:#f6f7fb; outline:none;
+    }
+    .btn {
+      padding:10px 14px; border-radius:8px; border:1px solid rgba(212,119,44,0.4);
+      background:#d4772c; color:#fff; cursor:pointer; font-weight:600;
+    }
+    .btn.alt { background:transparent; color:#f6f7fb; }
+    .btn:hover { filter:brightness(1.08); }
+
+    .category {
+      margin:24px 0; padding-top:4px;
+    }
+    .category h2 {
+      font-size:1.25rem; letter-spacing:.2px; margin-bottom:10px;
+      color:#f0dcc8; border-left:4px solid #d4772c; padding-left:10px;
+    }
+
+    /* Details / Summary styling */
+    details {
+      background:rgba(255,255,255,0.065);
+      border:1px solid rgba(212,119,44,0.25);
+      border-left:4px solid #d4772c;
+      border-radius:8px;
+      margin:10px 0;
+      overflow:hidden;
+    }
+    summary {
+      list-style:none;
+      cursor:pointer;
+      padding:14px 16px;
+      font-weight:600;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:#f6e9dc;
+    }
+    summary::-webkit-details-marker { display:none; }
+    .chev {
+      width:0; height:0;
+      border-left:6px solid currentColor;
+      border-top:5px solid transparent;
+      border-bottom:5px solid transparent;
+      transition:transform .2s ease;
+      opacity:.9;
+    }
+    details[open] .chev { transform:rotate(90deg); }
+    .entry {
+      padding:0 16px 14px 16px;
+      color:#e8eaf0;
+      border-top:1px solid rgba(212,119,44,0.18);
+    }
+    .tagline {
+      font-size:.92rem; color:#bfc9d8; margin-top:6px;
+    }
+
+    .muted {
+      color:#b8c5d6; font-size:.9rem; margin-top:6px;
+    }
+
+    .small-link { color:#f0dcc8; text-decoration:underline; }
+
+    .footer {
+      background:rgba(0,0,0,0.3); padding:18px 26px;
+      border-top:2px solid rgba(212,119,44,0.3);
+      display:flex; gap:16px; align-items:center; justify-content:space-between; flex-wrap:wrap;
+    }
+    .disclaimer { color:#b8c5d6; font-size:.85rem; }
+    .print { padding:9px 14px; }
+    .pill {
+      display:inline-block; font-size:.8rem; padding:4px 8px; border-radius:999px;
+      background:rgba(212,119,44,0.15); color:#f6e9dc; border:1px solid rgba(212,119,44,0.35);
+      margin-left:auto;
+    }
+
+    /* Hide while filtering */
+    .hidden { display:none !important; }
+
+    /* Category count */
+    .count {
+      font-size:.85rem; color:#bfc9d8; margin-left:8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>🎨 Atlantic Culture Glossary</h1>
+      <p class="subtitle">Click to expand short definitions of regional traditions, foods, music, and everyday life.</p>
+      <p class="breadcrumb">
+        <a href="index.html">← Back to Main Menu</a> ·
+        <a href="wabanaki-explorer.html">Wabanaki Explorer</a>
+      </p>
+    </header>
+
+    <main class="content">
+      <h2 class="section-title">How to Use This Page</h2>
+      <div class="intro">
+        <p><strong>Culture</strong> is how people live together — language, food, music, beliefs, celebrations, and everyday habits. This page focuses on <em>modern Atlantic Canadian culture</em>. Indigenous histories and lifeways are explored in depth on the <a class="small-link" href="wabanaki-explorer.html">Wabanaki Explorer</a> page.</p>
+        <p class="muted">Tip: Use the search box to find a word (“ceilidh”, “dulse”, “kitchen party”), or expand everything at once.</p>
+      </div>
+
+      <div class="toolbar">
+        <div class="search">
+          <input id="filterInput" type="text" placeholder="Search culture terms… (e.g., ceilidh, lobster, Tintamarre)"/>
+        </div>
+        <button id="expandAll" class="btn">Expand All</button>
+        <button id="collapseAll" class="btn alt">Collapse All</button>
+      </div>
+
+      <!-- CATEGORIES -->
+      <section class="category" data-category="traditions">
+        <h2>🎉 Traditions & Celebrations <span class="count" id="count-traditions"></span></h2>
+
+        <details data-term="tintamarre acadian celebration parade noise pride">
+          <summary><span class="chev"></span> Tintamarre <span class="pill">Acadian</span></summary>
+          <div class="entry">
+            An Acadian celebration where communities march and make joyful noise with pots, pans, and horns to show pride and survival.
+            <p class="tagline">Key idea: resilience and visibility.</p>
+          </div>
+        </details>
+
+        <details data-term="ceilidh kay-lee celtic gaelic music dance gathering cape breton">
+          <summary><span class="chev"></span> Ceilidh (“kay-lee”) <span class="pill">Celtic</span></summary>
+          <div class="entry">
+            A Scottish/Irish social gathering with live music, step-dancing, and storytelling — especially common in Cape Breton and across the Maritimes.
+            <p class="tagline">Key idea: community music & dance.</p>
+          </div>
+        </details>
+
+        <details data-term="mummering mummers newfoundland christmas costume visit music guessing">
+          <summary><span class="chev"></span> Mummering (NL)</summary>
+          <div class="entry">
+            A Newfoundland Christmas tradition where costumed visitors go house-to-house to sing, play music, and have hosts guess who they are.
+            <p class="tagline">Key idea: playful winter visiting.</p>
+          </div>
+        </details>
+
+        <details data-term="powwow indigenous mi’kmaq wolastoqiyik peskotomuhkati dance drum regalia">
+          <summary><span class="chev"></span> Powwow</summary>
+          <div class="entry">
+            Indigenous gathering with dance, song, drumming, and regalia that celebrates culture and community. For deeper context, see <a class="small-link" href="wabanaki-explorer.html">Wabanaki Explorer</a>.
+          </div>
+        </details>
+
+        <details data-term="belsnickeling belsnickel nova scotia christmas masks games">
+          <summary><span class="chev"></span> Belsnickeling (NS)</summary>
+          <div class="entry">
+            A German-influenced Nova Scotia custom where masked visitors go door-to-door at Christmas, playing games and spreading cheer.
+          </div>
+        </details>
+
+        <details data-term="kitchen party gathering music jam home informal">
+          <summary><span class="chev"></span> Kitchen Party</summary>
+          <div class="entry">
+            An informal get-together (often literally in the kitchen) with food, live music, and lots of singing — a classic Maritime vibe.
+          </div>
+        </details>
+
+        <details data-term="community supper fundraiser church hall fire hall meal">
+          <summary><span class="chev"></span> Community Supper</summary>
+          <div class="entry">
+            Fundraising meals hosted by churches, legions, or fire halls — places to eat together and support local causes.
+          </div>
+        </details>
+      </section>
+
+      <section class="category" data-category="music">
+        <h2>🎵 Music & Arts <span class="count" id="count-music"></span></h2>
+
+        <details data-term="fiddle music cape breton celtic maritime">
+          <summary><span class="chev"></span> Fiddle Music</summary>
+          <div class="entry">
+            Fast, rhythmic tunes at the heart of Celtic and Maritime traditions — perfect for step-dancing and sessions.
+          </div>
+        </details>
+
+        <details data-term="step-dancing step dancing dance celtic">
+          <summary><span class="chev"></span> Step-Dancing</summary>
+          <div class="entry">
+            Quick-footed traditional dance performed to fiddle tunes; common at ceilidhs and community halls.
+          </div>
+        </details>
+
+        <details data-term="sea shanties shanty sailors work songs maritime">
+          <summary><span class="chev"></span> Sea Shanties</summary>
+          <div class="entry">
+            Work songs once sung by sailors to coordinate tasks; many groups still perform them across the Maritimes.
+          </div>
+        </details>
+
+        <details data-term="storytelling folklore legends ghost shipwreck">
+          <summary><span class="chev"></span> Storytelling</summary>
+          <div class="entry">
+            Oral tradition of sharing local legends and folktales — often about the sea, storms, shipwrecks, and quirky characters.
+          </div>
+        </details>
+
+        <details data-term="craftwork crafts quilting boat building carving">
+          <summary><span class="chev"></span> Craftwork</summary>
+          <div class="entry">
+            Quilting, carving, boat-building, and other traditional crafts that showcase skill and local materials.
+          </div>
+        </details>
+      </section>
+
+      <section class="category" data-category="food">
+        <h2>🍲 Food & Drink <span class="count" id="count-food"></span></h2>
+
+        <details data-term="lobster roll sandwich seafood toasted bun">
+          <summary><span class="chev"></span> Lobster Roll</summary>
+          <div class="entry">
+            A sandwich filled with lobster meat (usually lightly dressed) on a toasted bun — a coastal classic.
+          </div>
+        </details>
+
+        <details data-term="chowder seafood potatoes cream soup">
+          <summary><span class="chev"></span> Chowder</summary>
+          <div class="entry">
+            A thick, creamy soup made with seafood (or sometimes corn), potatoes, and onions.
+          </div>
+        </details>
+
+        <details data-term="fishcakes salted cod potato pan fried">
+          <summary><span class="chev"></span> Fishcakes</summary>
+          <div class="entry">
+            Patties of salted fish (often cod) mixed with mashed potatoes and herbs, pan-fried until crisp.
+          </div>
+        </details>
+
+        <details data-term="poutine râpée acadian potato dumpling pork">
+          <summary><span class="chev"></span> Poutine Râpée</summary>
+          <div class="entry">
+            An Acadian potato dumpling stuffed with salted pork — hearty and traditional.
+          </div>
+        </details>
+
+        <details data-term="rappie pie acadian grated potato casserole broth">
+          <summary><span class="chev"></span> Rappie Pie</summary>
+          <div class="entry">
+            An Acadian casserole made with grated potatoes and rich broth, often with chicken.
+          </div>
+        </details>
+
+        <details data-term="dulse grand manan seaweed dried salty snack">
+          <summary><span class="chev"></span> Dulse</summary>
+          <div class="entry">
+            Edible red seaweed, dried and eaten as a salty snack — famously harvested on Grand Manan Island.
+          </div>
+        </details>
+
+        <details data-term="blueberry grunt dessert dumplings stewed berries">
+          <summary><span class="chev"></span> Blueberry Grunt</summary>
+          <div class="entry">
+            Sweet dumplings cooked over stewed wild blueberries — comfort in a bowl.
+          </div>
+        </details>
+      </section>
+
+      <section class="category" data-category="language">
+        <h2>🗣️ Languages & Expressions <span class="count" id="count-language"></span></h2>
+
+        <details data-term="acadian french chiac francophone dialect nb">
+          <summary><span class="chev"></span> Acadian French (incl. Chiac)</summary>
+          <div class="entry">
+            Distinct regional varieties of French with deep roots and local English influences (e.g., in southeast NB).
+          </div>
+        </details>
+
+        <details data-term="gaelic cape breton celtic language">
+          <summary><span class="chev"></span> Gaelic</summary>
+          <div class="entry">
+            Celtic language brought by Scottish settlers; still taught and celebrated in Cape Breton.
+          </div>
+        </details>
+
+        <details data-term="mi’kmaw mikmaw language indigenous place names">
+          <summary><span class="chev"></span> Mi’kmaw</summary>
+          <div class="entry">
+            Indigenous language of the Mi’kmaq; many regional place names come from Mi’kmaw words. See <a class="small-link" href="wabanaki-explorer.html">Wabanaki Explorer</a>.
+          </div>
+        </details>
+
+        <details data-term="who’s yer father expression greeting kinship">
+          <summary><span class="chev"></span> “Who’s yer father?”</summary>
+          <div class="entry">
+            A friendly way of asking where you’re from or who your family is — connecting people through community ties.
+          </div>
+        </details>
+      </section>
+
+      <section class="category" data-category="everyday">
+        <h2>⚓ Everyday Life & Work <span class="count" id="count-everyday"></span></h2>
+
+        <details data-term="fishing season lobster scallop herring calendar tides">
+          <summary><span class="chev"></span> Fishing Season</summary>
+          <div class="entry">
+            Many communities follow the rhythm of the sea — lobster, scallop, and herring seasons shape local calendars.
+          </div>
+        </details>
+
+        <details data-term="shipbuilding heritage wooden vessels saint john marco polo">
+          <summary><span class="chev"></span> Shipbuilding Heritage</summary>
+          <div class="entry">
+            The Maritimes’ age of wooden sailing ships left a legacy of skilled craftsmanship and port-city pride.
+          </div>
+        </details>
+
+        <details data-term="lighthouse icon symbol maritime coast navigation">
+          <summary><span class="chev"></span> Lighthouse Icon</summary>
+          <div class="entry">
+            A symbol seen on signs, art, and souvenirs — representing safety, the sea, and home.
+          </div>
+        </details>
+
+        <details data-term="storm prep weather seasons coastal resilience">
+          <summary><span class="chev"></span> Storm Prep</summary>
+          <div class="entry">
+            Coastal life means watching forecasts, tying down gear, and helping neighbours after big blows.
+          </div>
+        </details>
+
+        <details data-term="tourism summer festivals beaches trails whale watching">
+          <summary><span class="chev"></span> Summer Tourism</summary>
+          <div class="entry">
+            Beaches, trails, whale-watching, festivals — summer brings visitors and seasonal jobs across the region.
+          </div>
+        </details>
+      </section>
+
+      <section class="category" data-category="events">
+        <h2>🎪 Notable Festivals & Events <span class="count" id="count-events"></span></h2>
+
+        <details data-term="acadian festival caraquet tintamarre august">
+          <summary><span class="chev"></span> Festival acadien de Caraquet</summary>
+          <div class="entry">
+            A flagship Acadian celebration each August, culminating in a massive Tintamarre.
+          </div>
+        </details>
+
+        <details data-term="ceilidh celtic colors cape breton music">
+          <summary><span class="chev"></span> Celtic Colours (Cape Breton)</summary>
+          <div class="entry">
+            An international festival of Celtic music and culture held each fall across Cape Breton Island.
+          </div>
+        </details>
+
+        <details data-term="shellfish pei mussels oysters charlottetown">
+          <summary><span class="chev"></span> PEI International Shellfish Festival</summary>
+          <div class="entry">
+            A celebration of mussels, oysters, and culinary competitions — “the biggest kitchen party in Atlantic Canada.”
+          </div>
+        </details>
+
+        <details data-term="lobster crawl nova scotia winter food trail">
+          <summary><span class="chev"></span> Nova Scotia Lobster Crawl</summary>
+          <div class="entry">
+            A winter food trail and festival series along the South Shore, highlighting lobster culture and cuisine.
+          </div>
+        </details>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p class="disclaimer">
+        This glossary is a quick reference for students. For Indigenous histories and voices, visit the <a class="small-link" href="wabanaki-explorer.html">Wabanaki Explorer</a> page.
+      </p>
+      <button class="btn print" onclick="window.print()">🖨️ Print</button>
+    </footer>
+  </div>
+
+  <script>
+    // Simple search filter
+    const input = document.getElementById('filterInput');
+    const allDetails = Array.from(document.querySelectorAll('details'));
+    const counts = {
+      traditions: document.getElementById('count-traditions'),
+      music: document.getElementById('count-music'),
+      food: document.getElementById('count-food'),
+      language: document.getElementById('count-language'),
+      everyday: document.getElementById('count-everyday'),
+      events: document.getElementById('count-events'),
+    };
+
+    function updateCounts() {
+      const categories = document.querySelectorAll('.category');
+      categories.forEach(cat => {
+        const id = cat.getAttribute('data-category');
+        const visible = cat.querySelectorAll('details:not(.hidden)').length;
+        if (counts[id]) counts[id].textContent = `(${visible})`;
+      });
+    }
+
+    function filterTerms(q) {
+      const query = q.trim().toLowerCase();
+      allDetails.forEach(d => {
+        if (!query) {
+          d.classList.remove('hidden');
+          return;
+        }
+        const term = (d.getAttribute('data-term') || '').toLowerCase();
+        const text = d.innerText.toLowerCase();
+        const match = term.includes(query) || text.includes(query);
+        d.classList.toggle('hidden', !match);
+      });
+      updateCounts();
+    }
+
+    input.addEventListener('input', e => filterTerms(e.target.value));
+
+    // Expand/Collapse All
+    document.getElementById('expandAll').addEventListener('click', () => {
+      allDetails.forEach(d => { if (!d.classList.contains('hidden')) d.open = true; });
+    });
+    document.getElementById('collapseAll').addEventListener('click', () => {
+      allDetails.forEach(d => d.open = false);
+    });
+
+    // Initialize counts
+    updateCounts();
+  </script>
+</body>
+</html>

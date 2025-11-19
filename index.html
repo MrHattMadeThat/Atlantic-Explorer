@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlantic Canada Explorer - Main Menu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a2332 0%, #2d3e50 100%);
+            color: #e8eaf0;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 40px 30px;
+            text-align: center;
+            border-bottom: 3px solid #d4772c;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            color: #f0dcc8;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            color: #d4772c;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #b8c5d6;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .nav-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 25px;
+            border: 2px solid rgba(212, 119, 44, 0.2);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            cursor: pointer;
+        }
+
+        .nav-card:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(212, 119, 44, 0.6);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(212, 119, 44, 0.3);
+        }
+
+        .nav-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+            color: #f0dcc8;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-card p {
+            color: #b8c5d6;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .emoji {
+            font-size: 2rem;
+            line-height: 1;
+        }
+
+        .divider {
+            height: 1px;
+            background: rgba(212, 119, 44, 0.2);
+            margin: 30px 0;
+        }
+
+        .additional-resources {
+            background: rgba(212, 119, 44, 0.1);
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid #d4772c;
+            margin-top: 30px;
+        }
+
+        .additional-resources h3 {
+            color: #d4772c;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .resources-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .resource-item {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 3px solid rgba(212, 119, 44, 0.5);
+        }
+
+        .resource-item strong {
+            color: #d4772c;
+        }
+
+        .resource-item p {
+            color: #b8c5d6;
+            margin: 5px 0 0 0;
+            font-size: 0.9rem;
+        }
+
+        .footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px 30px;
+            text-align: center;
+            border-top: 2px solid rgba(212, 119, 44, 0.3);
+            color: #b8c5d6;
+            font-size: 0.9rem;
+        }
+
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+            
+            .container {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>⚓ Atlantic Canada Explorer</h1>
+            <p class="subtitle">Present & History of the Region</p>
+            <p>Explore the geography, history, provinces, economy, and culture of Atlantic Canada. This site is based on the Grade 6 Social Studies curriculum.</p>
+        </header>
+
+        <main class="content">
+            <div class="nav-grid">
+                <a href="geography.html" class="nav-card">
+                    <h2><span class="emoji">🗺️</span> Geography</h2>
+                    <p>Explore the physical features, climate, and resources of the four Atlantic provinces. Includes interactive maps.</p>
+                </a>
+
+                <a href="history.html" class="nav-card">
+                    <h2><span class="emoji">📅</span> History</h2>
+                    <p>Journey through time from pre-contact history and colonization to modern day. See key events that shaped the region.</p>
+                </a>
+
+                <a href="provinces.html" class="nav-card">
+                    <h2><span class="emoji">🏠</span> The Provinces</h2>
+                    <p>A closer look at each province: New Brunswick, Nova Scotia, PEI, and Newfoundland & Labrador. Includes a special page for St. George, NB.</p>
+                </a>
+
+                <a href="economics.html" class="nav-card">
+                    <h2><span class="emoji">📈</span> Modern Economy</h2>
+                    <p>Learn about the key industries, trade, global linkages, and economic opportunities and challenges in Atlantic Canada.</p>
+                </a>
+
+                <a href="culture.html" class="nav-card">
+                    <h2><span class="emoji">🎨</span> Culture & People</h2>
+                    <p>Discover the contemporary cultures, traditions, linguistic groups, and celebrations that make Atlantic Canada unique.</p>
+                </a>
+
+                <a href="weather.html" class="nav-card">
+                    <h2><span class="emoji">🌦️</span> Seasons and Weather</h2>
+                    <p>Learn about the maritime climate, four seasons, extreme weather events, and what makes Atlantic Canada's weather unique.</p>
+                </a>
+
+                <a href="quiz.html" class="nav-card">
+                    <h2><span class="emoji">✏️</span> Quiz</h2>
+                    <p>Test your knowledge about Atlantic Canada with interactive quiz questions based on the content from this explorer.</p>
+                </a>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="additional-resources">
+                <h3>📚 Additional Resources</h3>
+                <div class="resources-list">
+                    <div class="resource-item">
+                        <strong>Native Land Digital:</strong>
+                        <p>A community-sourced project that maps Indigenous territories, languages, and treaties. Used for the interactive map in this explorer.</p>
+                    </div>
+                    <div class="resource-item">
+                        <strong>The Canadian Encyclopedia:</strong>
+                        <p>A great resource for detailed articles on the history, culture, and geography of the Atlantic provinces.</p>
+                    </div>
+                    <div class="resource-item">
+                        <strong>Provincial Tourism Websites:</strong>
+                        <p>Check the official tourism sites for New Brunswick, Nova Scotia, PEI, and Newfoundland & Labrador for modern cultural information.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>This is an educational tool for the Grade 6 Social Studies curriculum. For authoritative information, please consult primary historical and cultural sources.</p>
+            <p style="margin-top: 10px; font-size: 0.85rem;">⚓ Each page works independently and is designed for easy browsing and learning.</p>
+        </footer>
+    </div>
+</body>
+</html>

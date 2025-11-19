@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economy - Atlantic Canada Explorer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a2332 0%, #2d3e50 100%);
+            color: #e8eaf0;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            text-align: center;
+            border-bottom: 3px solid #d4772c;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            color: #f0dcc8;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            color: #d4772c;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .header .breadcrumb {
+            font-size: 0.95rem;
+            color: #b8c5d6;
+        }
+
+        .header .breadcrumb a {
+            color: #d4772c;
+            text-decoration: none;
+        }
+
+        .header .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #f0dcc8;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(212, 119, 44, 0.3);
+        }
+
+        .subsection-title {
+            font-size: 1.4rem;
+            color: #f0dcc8;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(212, 119, 44, 0.2);
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(212, 119, 44, 0.2);
+            border-left: 4px solid #d4772c;
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            color: #f0dcc8;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            line-height: 1.7;
+            color: #e8eaf0;
+            margin-bottom: 12px;
+        }
+
+        .card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .activity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .activity-item {
+            background: rgba(212, 119, 44, 0.1);
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 3px solid #d4772c;
+        }
+
+        .activity-item h4 {
+            color: #d4772c;
+            margin-bottom: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .activity-item p {
+            font-size: 0.9rem;
+            color: #b8c5d6;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .highlight-box {
+            background: rgba(212, 119, 44, 0.1);
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 3px solid #d4772c;
+            margin: 20px 0;
+        }
+
+        .highlight-box strong {
+            color: #d4772c;
+        }
+
+        .footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 2px solid rgba(212, 119, 44, 0.3);
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .disclaimer {
+            font-size: 0.85rem;
+            color: #b8c5d6;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background: #d4772c;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #e68a3d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>📈 Modern Economy</h1>
+            <p class="subtitle">Industries, Trade, and Global Links</p>
+            <p class="breadcrumb">
+                <a href="index.html">← Back to Main Menu</a>
+            </p>
+        </header>
+
+        <main class="content">
+            <h2 class="section-title">The Atlantic Canadian Economy</h2>
+            
+            <div class="card">
+                <h3>Overview</h3>
+                <p>The economy of Atlantic Canada has traditionally been tied to its rich natural resources, especially fishing, forestry, and agriculture. Today, it is a diverse and evolving economy with new opportunities and challenges. The curriculum explores the role of economics in society [cite: 293] and the region's trade with the world[cite: 323].</p>
+            </div>
+
+            <h3 class="subsection-title">Key Industries</h3>
+            
+            <div class="activity-grid">
+                <div class="activity-item">
+                    <h4>Natural Resources</h4>
+                    <p>Fisheries (like lobster and salmon), agriculture (especially potatoes in PEI and blueberries), forestry, and mining.</p>
+                </div>
+                <div class="activity-item">
+                    <h4>Energy</h4>
+                    <p>Significant offshore oil and gas production (Newfoundland) and growing renewable energy sectors like wind and tidal power.</p>
+                </div>
+                <div class="activity-item">
+                    <h4>Tourism</h4>
+                    <p>A major industry, drawing visitors to see the region's natural beauty, historic sites, and unique culture.</p>
+                </div>
+                <div class="activity-item">
+                    <h4>Technology & Innovation</h4>
+                    <p>Growing sectors in information technology, ocean sciences ("blue economy"), aerospace, and video game development.</p>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Trade & Global Linkages</h3>
+
+            <div class="card">
+                <h3>Connected to the World</h3>
+                <p>Atlantic Canada's location makes it a key link between North America and Europe. Deep-water ports, like the Port of Halifax, are vital for international trade. The curriculum emphasizes researching these economic linkages[cite: 323].</p>
+                
+                <div class="highlight-box">
+                    <strong>Global Exports:</strong> The region exports goods around the world. Key exports include seafood (especially lobster to Asia and the US), energy, and manufactured goods. This global interdependence affects the local economy[cite: 325, 328].
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Opportunities & Challenges</h3>
+
+            <div class="card">
+                <h3>Looking Forward</h3>
+                <p>The curriculum asks students to analyze economic issues and opportunities[cite: 433, 436].</p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li style="margin-bottom: 8px;"><strong>Challenges:</strong> The region faces challenges, such as an aging population, reliance on seasonal industries, and climate change impacts on the coasts[cite: 221].</li>
+                    <li style="margin-bottom: 8px;"><strong>Opportunities:</strong> There are many opportunities in renewable energy, sustainable ocean technology (the "blue economy"), and attracting new immigrants and businesses to the region[cite: 293].</li>
+                </ul>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p class="disclaimer">
+                This is an educational overview of Atlantic Canada's economy. Economic conditions are complex and change over time.
+            </p>
+            <button class="btn" onclick="window.print()" aria-label="Print current view">
+                🖨️ Print
+            </button>
+        </footer>
+    </div>
+</body>
+</html>

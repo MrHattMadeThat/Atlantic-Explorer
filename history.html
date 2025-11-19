@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History - Atlantic Canada Explorer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a2332 0%, #2d3e50 100%);
+            color: #e8eaf0;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            text-align: center;
+            border-bottom: 3px solid #d4772c;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            color: #f0dcc8;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            color: #d4772c;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .header .breadcrumb {
+            font-size: 0.95rem;
+            color: #b8c5d6;
+        }
+
+        .header .breadcrumb a {
+            color: #d4772c;
+            text-decoration: none;
+        }
+
+        .header .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #f0dcc8;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(212, 119, 44, 0.3);
+        }
+
+        .intro {
+            background: rgba(212, 119, 44, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 4px solid #d4772c;
+        }
+
+        .timeline-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .timeline-item {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 25px;
+            border-left: 4px solid #d4772c;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .timeline-item:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateX(4px);
+        }
+
+        .timeline-item.active {
+            background: rgba(255, 255, 255, 0.15);
+            border-left-color: #ff6b35;
+            box-shadow: 0 4px 15px rgba(212, 119, 44, 0.3);
+        }
+
+        .timeline-label {
+            font-size: 0.9rem;
+            color: #d4772c;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .timeline-item h3 {
+            font-size: 1.4rem;
+            color: #f0dcc8;
+            margin-bottom: 12px;
+        }
+
+        .timeline-item p {
+            color: #e8eaf0;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .timeline-item p:last-child {
+            margin-bottom: 0;
+        }
+
+        .footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 2px solid rgba(212, 119, 44, 0.3);
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .disclaimer {
+            font-size: 0.85rem;
+            color: #b8c5d6;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background: #d4772c;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #e68a3d;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .timeline-item {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>📅 History of Atlantic Canada</h1>
+            <p class="subtitle">Key Events That Shaped the Region</p>
+            <p class="breadcrumb">
+                <a href="index.html">← Back to Main Menu</a>
+            </p>
+        </header>
+
+        <main class="content">
+            <h2 class="section-title">Journey Through Atlantic Canadian History</h2>
+            
+            <div class="intro">
+                <p><strong>Journey Through Time:</strong> Atlantic Canada has a deep and complex history, beginning with its First Peoples, through European colonization, and into its modern role in Canada. This timeline highlights key moments.</p>
+            </div>
+
+            <div class="timeline-container" id="timeline-container">
+                </div>
+        </main>
+
+        <footer class="footer">
+            <p class="disclaimer">
+                This is an educational tool providing historical context. For authoritative information, please consult diverse historical and cultural sources.
+            </p>
+            <button class="btn" onclick="window.print()" aria-label="Print current view">
+                🖨️ Print
+            </button>
+        </footer>
+    </div>
+
+    <script>
+        const TIMELINE_DATA = [
+            {
+                id: "precontact",
+                label: "Pre-1500s",
+                title: "Indigenous Homelands",
+                body: "Before European arrival, the lands now known as Atlantic Canada are the homelands of the Mi'kmaq, Wolastoqiyik (Maliseet), Passamaquoddy, Beothuk, and Inuit. These Nations have complex societies, trade networks, and deep connections to the land and sea."
+            },
+            {
+                id: "1600s",
+                label: "c. 1600s",
+                title: "Early European Contact & Colonization",
+                body: "European fishermen (French, English, Portuguese) visit the coasts. In the 1600s, France establishes permanent settlements in Acadia (Port-Royal in 1605) and England establishes settlements in Newfoundland, leading to alliances and conflicts with Indigenous Nations."
+            },
+            {
+                id: "1700s",
+                label: "1713-1763",
+                title: "Colonial Wars and Treaties",
+                body: "A period of intense conflict between Britain and France for control of the region. The British sign Peace and Friendship Treaties with the Mi'kmaq, Wolastoqiyik, and Passamaquoddy, which did not surrender land. The British expulsion of the Acadians (Le Grand Dérangement) occurs in 1755."
+            },
+            {
+                id: "1783",
+                label: "1783-1784",
+                title: "Arrival of the Loyalists",
+                body: "Following the American Revolution, tens of thousands of Loyalists (including Black Loyalists) flee the United States and settle in the region. This massive influx of people leads to the creation of New Brunswick as a separate colony from Nova Scotia in 1784."
+            },
+            {
+                id: "1867",
+                label: "1867",
+                title: "Confederation",
+                body: "In 1867, New Brunswick and Nova Scotia join with Ontario and Quebec to form the Dominion of Canada. Prince Edward Island joins in 1873."
+            },
+            {
+                id: "1949",
+                label: "1949",
+                title: "Newfoundland Joins Canada",
+                body: "After existing as a separate British colony and then a Dominion, Newfoundland (now Newfoundland & Labrador) votes in a referendum to join Canada, becoming the 10th province."
+            },
+            {
+                id: "today",
+                label: "Today",
+                title: "Contemporary Atlantic Canada",
+                body: "Today, Atlantic Canada is a diverse region balancing its rich history and cultural heritage with a modern economy. Key issues include economic development, an aging population, immigration, and the ongoing process of Reconciliation with Indigenous Peoples."
+            }
+        ];
+
+        function initializePage() {
+            const container = document.getElementById('timeline-container');
+            container.innerHTML = TIMELINE_DATA
+                .map(item => `
+                    <div class="timeline-item" data-id="${item.id}">
+                        <div class="timeline-label">${item.label}</div>
+                        <h3>${item.title}</h3>
+                        <p>${item.body}</p>
+                    </div>
+                `)
+                .join('');
+
+            // Add click listeners
+            document.querySelectorAll('.timeline-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    document.querySelectorAll('.timeline-item').forEach(i => i.classList.remove('active'));
+                    item.classList.add('active');
+                });
+            });
+
+            // Highlight first item by default
+            if (TIMELINE_DATA.length > 0) {
+                document.querySelector('.timeline-item')?.classList.add('active');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', initializePage);
+    </script>
+</body>
+</html>
